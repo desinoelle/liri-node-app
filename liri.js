@@ -19,10 +19,64 @@ for (var i = 3; i < process.argv.length; i++) {
     userSearch += process.argv[i];
 }
 
-// Liri commands:
+// Run liriCommands
+liriCommands();
+
+// Liri Commands:
+function liriCommands() {
+
+    console.log(command);
+
+    // Liri commands:
+    if (command === "concert-this") {
+        console.log("Finding concert...");
+
+        concertThis();
+    }
+    if (command === "spotify-this-song") {
+        console.log("Finding song...");
+
+        spotifyThisSong();
+    }
+    if (command === "movie-this") {
+        console.log("Finding movie...");
+
+        movieThis();
+    }
+    // READ RANDOM.txt
+    if (command === "do-what-it-says") {
+        console.log("Reading file...");
+    
+        readThis();
+    }
+}
+
+// Search Functions
+// READ FILE
+function readThis () {
+
+    fs.readFile("random.txt", "utf8", function(error, data) {
+
+        if (error) {
+            console.log("Error: " + error);
+        }
+
+        // Split data by commas
+        var dataArr = data.split(",");
+    
+        // Get new command and search term
+        command = dataArr[0];
+        userSearch = dataArr[1];
+
+        // Format the search term
+        userSearch = userSearch.split(" ").join("+");
+
+        // Run liriCommands
+        liriCommands();
+    });
+}
 // BANDS IN TOWN
-if (command === "concert-this") {
-    console.log("Finding concert...");
+function concertThis () {
 
     // If no search, make userSearch = "The 1975"
     if (userSearch === "") {
@@ -49,10 +103,8 @@ if (command === "concert-this") {
         }
     });
 }
-
 // SPOTIFY
-if (command === "spotify-this-song") {
-    console.log("Finding song...");
+function spotifyThisSong () {
 
     // If no search, make userSearch = "The Sign" by Ace of Base
     if (userSearch === "") {
@@ -82,10 +134,8 @@ if (command === "spotify-this-song") {
         }
     });
 }
-
 // OMDB
-if (command === "movie-this") {
-    console.log("Finding movie...");
+function movieThis () {
 
     // If no search, make userSearch = "Mr. Nobody"
     if (userSearch === "") {
@@ -119,11 +169,4 @@ if (command === "movie-this") {
           console.log("Actors: " + actors);
         }
     });
-}
-
-// READ RANDOM.txt
-if (command === "do-what-it-says") {
-    console.log("Reading file...");
-
-    
 }
